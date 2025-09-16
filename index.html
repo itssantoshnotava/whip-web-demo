@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Whisp — Demo</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f6f6fb;
+    --accent:#5b21b6;
+    --muted:#6b7280;
+    --card:#ffffff;
+  }
+  *{box-sizing:border-box;font-family:Inter,system-ui,Arial;margin:0;padding:0}
+  html,body,#app{height:100%}
+  body{background:linear-gradient(180deg,#f8f7fb, #eef1ff);color:#111}
+  /* Splash */
+  #splash{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg, rgba(91,33,182,0.95), rgba(72,47,155,0.9));color:#fff;z-index:9999;flex-direction:column}
+  #splash .logo{width:120px;height:120px;border-radius:999px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:54px;background:rgba(255,255,255,0.08);box-shadow:0 10px 30px rgba(0,0,0,0.15)}
+  #splash h1{margin-top:18px;font-size:26px;letter-spacing:0.5px}
+  /* layout */
+  .container{max-width:1100px;margin:48px auto;padding:20px;display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:center}
+  .left{
+    background:linear-gradient(180deg, rgba(91,33,182,0.08), rgba(99,102,241,0.04));
+    border-radius:16px;padding:48px;min-height:520px;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:16px;
+  }
+  .left .big-title{font-size:36px;font-weight:700;color:var(--accent)}
+  .left p{color:var(--muted);max-width:420px}
+  .mock-phone{margin-top:18px;border-radius:14px;background:#fff;padding:14px;box-shadow:0 8px 30px rgba(99,102,241,0.08);width:300px}
+  .right{display:flex;align-items:center;justify-content:center;min-height:520px}
+  .card{background:var(--card);border-radius:14px;padding:28px;width:100%;max-width:460px;box-shadow:0 10px 30px rgba(2,6,23,0.04)}
+  .toggle{display:flex;gap:8px;margin-bottom:20px}
+  .toggle button{flex:1;padding:10px 12px;border-radius:10px;border:1px solid rgba(16,24,40,0.06);background:transparent;cursor:pointer}
+  .toggle button.active{background:linear-gradient(90deg,var(--accent), #7c3aed);color:#fff;border:none}
+  .form-group{margin-bottom:12px}
+  label{display:block;font-size:13px;color:var(--muted);margin-bottom:6px}
+  input[type=text],input[type=password],input[type=email]{
+    width:100%;padding:12px;border-radius:10px;border:1px solid #e6e8f0;background:#fafafa
+  }
+  .btn{display:inline-block;padding:10px 14px;border-radius:10px;background:var(--accent);color:#fff;border:none;cursor:pointer}
+  .btn.ghost{background:transparent;color:var(--accent);border:1px solid rgba(91,33,182,0.12)}
+  .small{font-size:13px;color:var(--muted);margin-top:8px}
+  .error{color:#b91c1c;font-size:13px;margin-top:8px}
+  .feed{margin-top:18px}
+  .post{background:#fff;border-radius:12px;padding:12px;margin-bottom:12px;box-shadow:0 6px 18px rgba(2,6,23,0.04)}
+  .post .meta{display:flex;gap:10px;align-items:center;margin-bottom:8px}
+  .badge{background:linear-gradient(90deg,#fef3c7,#fde68a);padding:6px 8px;border-radius:8px;font-size:12px;color:#92400e}
+  .nav{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+  .nav a{color:var(--muted);text-decoration:none;margin-left:12px}
+  footer{text-align:center;color:var(--muted);margin-top:34px;font-size:13px}
+  @media(max-width:880px){
+    .container{grid-template-columns:1fr;padding:18px}
+    .left{display:none}
+  }
+</style>
+</head>
+<body>
+<div id="splash" aria-hidden="false">
+  <div class="logo">W</div>
+  <h1>Whisp</h1>
+  <div style="margin-top:8px;color:rgba(255,255,255,0.9)">Whisper. Share. Repeat.</div>
+</div>
+
+<div id="app" style="display:none">
+  <div class="container">
+    <div class="left">
+      <div class="big-title">Whisp</div>
+      <p>Where thoughts travel quietly. An invite-only anonymous space for your crew. Join with an access code and share without the pressure.</p>
+      <div class="mock-phone">
+        <div style="font-weight:600;margin-bottom:8px">Preview — Feed</div>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div style="display:flex;gap:10px;align-items:center">
+            <div style="width:36px;height:36px;border-radius:999px;background:linear-gradient(90deg,#7c3aed,#5b21b6);display:flex;align-items:center;justify-content:center;color:#fff">M</div>
+            <div>
+              <div style="font-weight:600">Mysterio <span class="badge">Beta</span></div>
+              <div style="font-size:13px;color:var(--muted)">Spotted: cafeteria tea is wild today 💀</div>
+            </div>
+          </div>
+          <div style="height:8px"></div>
+          <div style="font-size:12px;color:var(--muted)">Demo preview — feels aesthetic + modern</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="right">
+      <div class="card" role="main">
+        <div class="nav" style="margin-bottom:22px">
+          <div style="font-weight:700;color:var(--accent)">Whisp</div>
+          <div>
+            <a href="#" id="link-terms">Terms</a>
+            <a href="#" id="link-contact">Contact</a>
+          </div>
+        </div>
+
+        <div id="auth-area">
+          <div class="toggle" role="tablist">
+            <button id="btn-login" class="active" aria-pressed="true">Login</button>
+            <button id="btn-signup">Sign Up</button>
+          </div>
+
+          <!-- LOGIN FORM -->
+          <div id="login-form">
+            <div class="form-group">
+              <label>Email</label>
+              <input id="login-email" type="email" placeholder="you@school.edu" />
+            </div>
+            <div class="form-group">
+              <label>Password</label>
+              <input id="login-pass" type="password" placeholder="••••••" />
+            </div>
+            <div style="display:flex;gap:8px;align-items:center;margin-top:6px">
+              <button class="btn" id="login-btn">Login</button>
+              <button class="btn ghost" id="show-signup">New here? Sign up</button>
+            </div>
+            <div id="login-error" class="error" aria-live="polite"></div>
+            <div class="small" style="margin-top:12px">By continuing, you agree to Whisp's <a href="#" style="color:var(--accent)">terms</a>.</div>
+          </div>
+
+          <!-- SIGNUP (multi-step) -->
+          <div id="signup-form" style="display:none">
+            <!-- step 1 -->
+            <div id="step-1">
+              <div class="form-group">
+                <label>Enter Access Code</label>
+                <input id="access-code" type="text" placeholder="e.g., WHISP2025" />
+              </div>
+              <div style="display:flex;gap:8px;align-items:center">
+                <button class="btn" id="verify-code">Verify</button>
+                <button class="btn ghost" id="cancel-verify">Back</button>
+              </div>
+              <div id="code-info" class="small" style="margin-top:10px;color:var(--muted)">
+                Demo codes (use any): <strong id="codes-list"></strong>
+              </div>
+              <div id="code-error" class="error"></div>
+            </div>
+
+            <!-- step 2 -->
+            <div id="step-2" style="display:none; margin-top:10px">
+              <div class="form-group">
+                <label>Display name</label>
+                <input id="su-name" type="text" placeholder="Pick a unique display name" />
+              </div>
+              <div class="form-group">
+                <label>Email</label>
+                <input id="su-email" type="email" placeholder="you@school.edu" />
+              </div>
+              <div class="form-group">
+                <label>Password</label>
+                <input id="su-pass" type="password" placeholder="min 4 chars" />
+              </div>
+              <div style="display:flex;gap:8px;align-items:center">
+                <button class="btn" id="create-account">Sign Up</button>
+                <button class="btn ghost" id="back-to-code">Back</button>
+              </div>
+              <div id="signup-error" class="error"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- FEED (shown after login) -->
+        <div id="feed-area" style="display:none">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+            <div>
+              <div style="font-weight:700">Tea?</div>
+              <div class="small">Trending posts from your crew</div>
+            </div>
+            <div>
+              <button class="btn ghost" id="btn-logout">Logout</button>
+            </div>
+          </div>
+          <div class="feed" id="feed-list">
+            <!-- posts injected here -->
+          </div>
+          <footer>Whisp • demo — no data leaves your browser</footer>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ==========================
+   Demo logic (no backend)
+   - Access codes stored in localStorage as object {code: usedByEmail|null}
+   - Users stored in localStorage under key 'whisp_users' as array of {email,pass,name,badge}
+   - Session stored with 'whisp_session' = email
+   ===========================*/
+
+const DEMO_PRESET_CODES = [
+  'WHISP2025','INVITE001','INVITE002','INVITE003','STUDENT10','TEA12345',
+  'CAMPUS11','CREW2025','SCHOOLX1','GHOST100'
+];
+
+// show splash then app
+window.addEventListener('load', ()=> {
+  setTimeout(()=> {
+    document.getElementById('splash').style.display='none';
+    document.getElementById('app').style.display='block';
+    initApp();
+  }, 1800);
+});
+
+function initApp(){
+  // populate codes to UI
+  document.getElementById('codes-list').innerText = DEMO_PRESET_CODES.join(', ');
+  // ensure codes exist in localStorage
+  if(!localStorage.getItem('whisp_codes')){
+    const obj = {};
+    DEMO_PRESET_CODES.forEach(c=> obj[c]=null); // null => unused
+    localStorage.setItem('whisp_codes', JSON.stringify(obj));
+  }
+  // wire toggles
+  document.getElementById('btn-login').onclick = ()=> toggleAuth('login');
+  document.getElementById('btn-signup').onclick = ()=> toggleAuth('signup');
+  document.getElementById('show-signup').onclick = ()=> toggleAuth('signup');
+  document.getElementById('cancel-verify').onclick = ()=> toggleAuth('login');
+  document.getElementById('back-to-code').onclick = ()=> {
+    document.getElementById('step-2').style.display='none';
+    document.getElementById('step-1').style.display='block';
+  };
+
+  document.getElementById('verify-code').onclick = verifyCode;
+  document.getElementById('create-account').onclick = createAccount;
+  document.getElementById('login-btn').onclick = login;
+  document.getElementById('btn-logout').onclick = logout;
+
+  // if session exist -> show feed
+  const sess = localStorage.getItem('whisp_session');
+  if(sess) showFeed();
+}
+
+function toggleAuth(mode){
+  const loginBtn = document.getElementById('btn-login');
+  const signupBtn = document.getElementById('btn-signup');
+  const loginForm = document.getElementById('login-form');
+  const signupForm = document.getElementById('signup-form');
+  loginBtn.classList.remove('active'); signupBtn.classList.remove('active');
+  loginForm.style.display='none'; signupForm.style.display='none';
+  if(mode==='login'){
+    loginBtn.classList.add('active'); loginForm.style.display='block';
+  } else {
+    signupBtn.classList.add('active'); signupForm.style.display='block';
+    document.getElementById('step-1').style.display='block';
+    document.getElementById('step-2').style.display='none';
+  }
+}
+
+function getCodesObj(){ return JSON.parse(localStorage.getItem('whisp_codes') || '{}') }
+function setCodesObj(o){ localStorage.setItem('whisp_codes', JSON.stringify(o)) }
+
+function verifyCode(){
+  const v = document.getElementById('access-code').value.trim().toUpperCase();
+  const err = document.getElementById('code-error'); err.innerText='';
+  if(!v){ err.innerText = 'Enter a code.'; return; }
+  const codes = getCodesObj();
+  if(!(v in codes)){ err.innerText = 'Invalid code.'; return; }
+  if(codes[v]){ err.innerText = 'Code already used.'; return; }
+  // success -> show step 2
+  document.getElementById('step-1').style.display='none';
+  document.getElementById('step-2').style.display='block';
+  // keep code saved temporarily
+  window.__whisp_pending_code = v;
+}
+
+function loadUsers(){ return JSON.parse(localStorage.getItem('whisp_users') || '[]') }
+function saveUsers(u){ localStorage.setItem('whisp_users', JSON.stringify(u)) }
+
+function createAccount(){
+  const name = document.getElementById('su-name').value.trim();
+  const email = document.getElementById('su-email').value.trim().toLowerCase();
+  const pass = document.getElementById('su-pass').value;
+  const err = document.getElementById('signup-error'); err.innerText='';
+  if(!window.__whisp_pending_code){ err.innerText='No verified code. Go back.'; return; }
+  if(!name || !email || pass.length < 4){ err.innerText='Fill all fields (password >=4 chars).'; return; }
+  // check unique email and name
+  const users = loadUsers();
+  if(users.some(u=>u.email===email)){ err.innerText='Email already registered. Login instead.'; return; }
+  if(users.some(u=>u.name===name)){ err.innerText='Display name taken.'; return; }
+  // create
+  const newUser = {name, email, pass, badge:'Newbie', createdAt:Date.now()};
+  users.push(newUser);
+  saveUsers(users);
+  // mark code used
+  const codes = getCodesObj();
+  codes[window.__whisp_pending_code] = email;
+  setCodesObj(codes);
+  // create session
+  localStorage.setItem('whisp_session', email);
+  // cleanup
+  window.__whisp_pending_code = null;
+  // show feed
+  showFeed();
+}
+
+function login(){
+  const email = document.getElementById('login-email').value.trim().toLowerCase();
+  // demo: accept if email exists (pass ignored for demo)
+  const users = loadUsers();
+  const user = users.find(u=>u.email===email);
+  const err = document.getElementById('login-error'); err.innerText='';
+  if(!user){ err.innerText = 'No account found. Use sign up.'; return; }
+  localStorage.setItem('whisp_session', email);
+  showFeed();
+}
+
+function logout(){
+  localStorage.removeItem('whisp_session');
+  // return to auth
+  document.getElementById('feed-area').style.display='none';
+  document.getElementById('auth-area').style.display='block';
+  toggleAuth('login');
+}
+
+function showFeed(){
+  // hide auth, show feed
+  document.getElementById('auth-area').style.display='none';
+  document.getElementById('feed-area').style.display='block';
+  // render some demo posts and user's name
+  const feed = document.getElementById('feed-list');
+  feed.innerHTML = '';
+  const users = loadUsers();
+  const sessionEmail = localStorage.getItem('whisp_session');
+  const me = users.find(u=>u.email===sessionEmail) || {name:'You', badge:'Newbie'};
+  // welcome card
+  const welcome = el('div',{class:'post'}, `
+    <div style="display:flex;justify-content:space-between">
+      <div><strong>Welcome, ${escapeHtml(me.name)}</strong> <span class="badge">${escapeHtml(me.badge)}</span></div>
+      <div style="color:var(--muted);font-size:13px">You are logged in</div>
+    </div>
+    <div style="margin-top:8px;color:var(--muted)">This is a demo feed. In the real app, posts are public to your crew.</div>
+  `);
+  feed.appendChild(welcome);
+  // a few dummy posts
+  const dummy = [
+    {user:'Mysterio', text:'First Whisp — this app is dope!', badge:'Beta'},
+    {user:'QuietKid', text:'Anyone else stressed about finals? #school', badge:'Newbie'},
+    {user:'Ghost', text:'Spotted: cafeteria tea is wild today 💀', badge:''}
+  ];
+  dummy.forEach(p=>{
+    const card = el('div',{class:'post'}, `
+      <div class="meta">
+        <div style="width:36px;height:36px;border-radius:999px;background:linear-gradient(90deg,#7c3aed,#5b21b6);display:inline-flex;align-items:center;justify-content:center;color:#fff;margin-right:10px">${escapeHtml(p.user.charAt(0))}</div>
+        <div style="display:inline-block"><strong>${escapeHtml(p.user)}</strong> ${p.badge? '<span class="badge">'+escapeHtml(p.badge)+'</span>':''}<div style="font-size:13px;color:var(--muted)">0 replies • 0 likes</div></div>
+      </div>
+      <div style="margin-top:10px">${escapeHtml(p.text)}</div>
+    `);
+    feed.appendChild(card);
+  });
+}
+
+// helper
+function el(tag, attrs={}, inner=''){ const d = document.createElement(tag); if(attrs.class) d.className=attrs.class; d.innerHTML=inner; return d; }
+function escapeHtml(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+</script>
+</body>
+</html>
+
